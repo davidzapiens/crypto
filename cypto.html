@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crypto NeX</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 </head>
 <body>
   <!-- Modal de Detalles -->
@@ -50,6 +54,12 @@
       </div>
 
       <div id="chart-tab" style="display: none;">
+        <div class="chart-controls">
+          <button class="time-button" data-time="24h">24H</button>
+          <button class="time-button active" data-time="7d">7D</button>
+          <button class="time-button" data-time="30d">30D</button>
+          <button class="time-button" data-time="1y">1Y</button>
+        </div>
         <div class="chart-container">
           <canvas id="modal-chart"></canvas>
         </div>
@@ -63,7 +73,7 @@
   </div>
 
   <section id="login-section">
-    <div class="login-card">
+    <div class="login-card" id="login-card">
       <h2>Iniciar Sesión</h2>
       <form id="login-form">
         <input
@@ -80,65 +90,45 @@
           required
         />
         <button type="submit">Entrar</button>
+        <p class="form-footer">
+          ¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a>
+        </p>
+      </form>
+    </div>
+
+    <div class="login-card" id="register-card" style="display: none;">
+      <h2>Registro</h2>
+      <form id="register-form">
+        <input
+          type="text"
+          id="nuevo-usuario"
+          placeholder="Elige un nombre de usuario"
+          required
+          autocomplete="off"
+          minlength="3"
+        />
+        <input
+          type="password"
+          id="nueva-password"
+          placeholder="Elige una contraseña"
+          required
+          minlength="4"
+        />
+        <input
+          type="password"
+          id="confirmar-password"
+          placeholder="Confirma tu contraseña"
+          required
+        />
+        <button type="submit">Registrarse</button>
+        <p class="form-footer">
+          ¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión</a>
+        </p>
       </form>
     </div>
   </section>
 
-  <!-- Modal de Detalles -->
-  <div id="coinModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <div class="coin-header">
-        <img id="modal-coin-image" src="" alt=""/>
-        <h2 id="modal-coin-name"></h2>
-      </div>
-      
-      <div class="modal-tabs">
-        <button class="tab-button active" data-tab="overview">Vista General</button>
-        <button class="tab-button" data-tab="chart">Gráfica</button>
-        <button class="tab-button" data-tab="news">Noticias</button>
-      </div>
-
-      <div id="overview-tab" class="coin-stats">
-        <div class="stat-card">
-          <h4>Precio Actual</h4>
-          <p id="modal-price"></p>
-        </div>
-        <div class="stat-card">
-          <h4>Cambio 24h</h4>
-          <p id="modal-change"></p>
-        </div>
-        <div class="stat-card">
-          <h4>Cap. de Mercado</h4>
-          <p id="modal-market-cap"></p>
-        </div>
-        <div class="stat-card">
-          <h4>Volumen 24h</h4>
-          <p id="modal-volume"></p>
-        </div>
-        <div class="stat-card">
-          <h4>Máximo 24h</h4>
-          <p id="modal-high"></p>
-        </div>
-        <div class="stat-card">
-          <h4>Mínimo 24h</h4>
-          <p id="modal-low"></p>
-        </div>
-      </div>
-
-      <div id="chart-tab" style="display: none;">
-        <div class="chart-container">
-          <canvas id="modal-chart"></canvas>
-        </div>
-      </div>
-
-      <div id="news-tab" style="display: none;">
-        <div class="news-section" id="modal-news">
-          <!-- Las noticias se cargarán dinámicamente -->
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <section id="main-section" style="display: none;">
     <header>
@@ -210,9 +200,44 @@
         </div>
       </div>
 
-      <div id="chart-tab" style="display: none;">
-        <div class="chart-container">
-          <canvas id="modal-chart"></canvas>
+      <div id="chart-tab" class="chart-tab" style="display: none;">
+        <div class="tab-content">
+          <div class="chart-section">
+            <div class="chart-controls">
+              <button class="time-button" data-time="24h">24H</button>
+              <button class="time-button" data-time="7d">7D</button>
+              <button class="time-button" data-time="30d">30D</button>
+              <button class="time-button" data-time="1y">1Y</button>
+            </div>
+            <div class="chart-container">
+              <canvas id="modal-chart"></canvas>
+            </div>
+          </div>
+          
+          <div class="about-section">
+            <h3>Acerca de <span class="coin-name-title"></span></h3>
+            <p class="coin-description"></p>
+            <div class="features-container">
+              <h4>Características Principales</h4>
+              <ul class="features-list"></ul>
+            </div>
+            <div class="links-container">
+              <a href="#" class="website-link" target="_blank" rel="noopener">Sitio Web Oficial</a>
+              <a href="#" class="whitepaper-link" target="_blank" rel="noopener">Whitepaper</a>
+            </div>
+          </div>
+        </div>
+        <div class="about-section">
+          <h3>Acerca de <span class="coin-name-title"></span></h3>
+          <p class="coin-description"></p>
+          <div class="features-container">
+            <h4>Características Principales</h4>
+            <ul class="features-list"></ul>
+          </div>
+          <div class="links-container">
+            <a href="#" class="website-link" target="_blank">Sitio Web Oficial</a>
+            <a href="#" class="whitepaper-link" target="_blank">Whitepaper</a>
+          </div>
         </div>
       </div>
 
