@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Broker Básico de Criptomonedas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Broker Básico de Criptomonedas</h1>
+  </header>
+
+  <main>
+    <section id="market">
+      <h2>Mercado</h2>
+      <table id="crypto-table">
+        <thead>
+          <tr>
+            <th>Criptomoneda</th>
+            <th>Precio (USD)</th>
+            <th>Cambio 24h</th>
+            <th>Gráfica 7d</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="wallet">
+      <h2>Mi Cartera</h2>
+      <ul>
+        <li>USD: <span id="usd-balance">10000</span></li>
+        <li>BTC: <span id="btc-balance">0</span></li>
+        <li>ETH: <span id="eth-balance">0</span></li>
+      </ul>
+    </section>
+
+    <section id="orders">
+      <h2>Historial de Órdenes</h2>
+      <ul id="order-history"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Desarrollado por David — Broker Demo con API de CoinGecko</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
