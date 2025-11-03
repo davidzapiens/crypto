@@ -3,50 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Broker Básico de Criptomonedas</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Crypto NeX</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Broker Básico de Criptomonedas</h1>
-  </header>
+  <!-- Modal de Detalles -->
+  <div id="coinModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="coin-header">
+        <img id="modal-coin-image" src="" alt=""/>
+        <h2 id="modal-coin-name"></h2>
+      </div>
+      
+      <div class="modal-tabs">
+        <button class="tab-button active" data-tab="overview">Vista General</button>
+        <button class="tab-button" data-tab="chart">Gráfica</button>
+        <button class="tab-button" data-tab="news">Noticias</button>
+      </div>
 
-  <main>
-    <section id="market">
-      <h2>Mercado</h2>
-      <table id="crypto-table">
-        <thead>
-          <tr>
-            <th>Criptomoneda</th>
-            <th>Precio (USD)</th>
-            <th>Cambio 24h</th>
-            <th>Gráfica 7d</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
+      <div id="overview-tab" class="coin-stats">
+        <div class="stat-card">
+          <h4>Precio Actual</h4>
+          <p id="modal-price"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Cambio 24h</h4>
+          <p id="modal-change"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Cap. de Mercado</h4>
+          <p id="modal-market-cap"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Volumen 24h</h4>
+          <p id="modal-volume"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Máximo 24h</h4>
+          <p id="modal-high"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Mínimo 24h</h4>
+          <p id="modal-low"></p>
+        </div>
+      </div>
 
-    <section id="wallet">
-      <h2>Mi Cartera</h2>
-      <ul>
-        <li>USD: <span id="usd-balance">10000</span></li>
-        <li>BTC: <span id="btc-balance">0</span></li>
-        <li>ETH: <span id="eth-balance">0</span></li>
-      </ul>
-    </section>
+      <div id="chart-tab" style="display: none;">
+        <div class="chart-container">
+          <canvas id="modal-chart"></canvas>
+        </div>
+      </div>
 
-    <section id="orders">
-      <h2>Historial de Órdenes</h2>
-      <ul id="order-history"></ul>
-    </section>
-  </main>
+      <div id="news-tab" style="display: none;">
+        <div class="news-section" id="modal-news">
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <footer>
-    <p>Desarrollado por David — Broker Demo con API de CoinGecko</p>
-  </footer>
+  <section id="login-section">
+    <div class="login-card">
+      <h2>Iniciar Sesión</h2>
+      <form id="login-form">
+        <input
+          type="text"
+          id="usuario"
+          placeholder="Usuario"
+          required
+          autocomplete="off"
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Contraseña"
+          required
+        />
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- Modal de Detalles -->
+  <div id="coinModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="coin-header">
+        <img id="modal-coin-image" src="" alt=""/>
+        <h2 id="modal-coin-name"></h2>
+      </div>
+      
+      <div class="modal-tabs">
+        <button class="tab-button active" data-tab="overview">Vista General</button>
+        <button class="tab-button" data-tab="chart">Gráfica</button>
+        <button class="tab-button" data-tab="news">Noticias</button>
+      </div>
+
+      <div id="overview-tab" class="coin-stats">
+        <div class="stat-card">
+          <h4>Precio Actual</h4>
+          <p id="modal-price"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Cambio 24h</h4>
+          <p id="modal-change"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Cap. de Mercado</h4>
+          <p id="modal-market-cap"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Volumen 24h</h4>
+          <p id="modal-volume"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Máximo 24h</h4>
+          <p id="modal-high"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Mínimo 24h</h4>
+          <p id="modal-low"></p>
+        </div>
+      </div>
+
+      <div id="chart-tab" style="display: none;">
+        <div class="chart-container">
+          <canvas id="modal-chart"></canvas>
+        </div>
+      </div>
+
+      <div id="news-tab" style="display: none;">
+        <div class="news-section" id="modal-news">
+          <!-- Las noticias se cargarán dinámicamente -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="main-section" style="display: none;">
+    <header>
+      <h1>Crypto NeX</h1>
+      <button id="logout-btn">Cerrar sesión</button>
+    </header>
+
+    <main>
+      <section id="market">
+        <h2>Mercado</h2>
+        <table id="crypto-table">
+          <thead>
+            <tr>
+              <th>Criptomoneda</th>
+              <th>Precio (USD)</th>
+              <th>Cambio 24h</th>
+              <th>Gráfica 7d</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer>
+    </footer>
+  </section>
+
+  <!-- Modal de Detalles -->
+  <div id="coinModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="coin-header">
+        <img id="modal-coin-image" src="" alt=""/>
+        <h2 id="modal-coin-name"></h2>
+      </div>
+      
+      <div class="modal-tabs">
+        <button class="tab-button active" data-tab="overview">Vista General</button>
+        <button class="tab-button" data-tab="chart">Gráfica</button>
+        <button class="tab-button" data-tab="news">Noticias</button>
+      </div>
+
+      <div class="coin-stats" id="overview-tab">
+        <div class="stat-card">
+          <h4>Precio Actual</h4>
+          <p id="modal-price"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Cambio 24h</h4>
+          <p id="modal-change"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Cap. de Mercado</h4>
+          <p id="modal-market-cap"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Volumen 24h</h4>
+          <p id="modal-volume"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Máximo 24h</h4>
+          <p id="modal-high"></p>
+        </div>
+        <div class="stat-card">
+          <h4>Mínimo 24h</h4>
+          <p id="modal-low"></p>
+        </div>
+      </div>
+
+      <div id="chart-tab" style="display: none;">
+        <div class="chart-container">
+          <canvas id="modal-chart"></canvas>
+        </div>
+      </div>
+
+      <div id="news-tab" style="display: none;">
+        <div class="news-section" id="modal-news">
+          <!-- Las noticias se cargarán dinámicamente -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
